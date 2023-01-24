@@ -25,7 +25,7 @@ jobs:
         name: verademoartifact
         path: '*'
   Veracode:
-    runs-on: ununtu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Upload & Scan
       uses: veracode/veracode-uploadandscan-action@0.2.4
@@ -34,7 +34,7 @@ jobs:
         createprofile: false
         filepath: '*'
         version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
-        vid: ${{ secrets.VERA_ID }}
-        vkey: ${{ secrets.VERA_KEY }}
+        vid: ${{ secrets.VERACODE_API_ID }}
+        vkey: ${{ secrets.VERACODE_API_KEY }}
         createsandbox: false 
         scantimeout: 45
