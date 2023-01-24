@@ -14,9 +14,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore app\app.csproj
+      run: dotnet restore verademo-dotnet\Verademo-Dotnet\Verademo-dotnet.csproj
     - name: Build
-      run: dotnet build app\app.csproj --no-restore
+      run: dotnet build verademo-dotnet\Verademo-Dotnet\Verademo-dotnet.csproj --no-restore
     - name: QA Test
       run: dotnet test app\ --no-build --verbosity normal
     - name: Upload archive
