@@ -24,6 +24,11 @@ jobs:
       with:
         name: verademoartifact
         path: '*'
+    - name: Downloads the artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: verademoartifact
+
   Veracode:
     runs-on: ubuntu-latest
     steps:
