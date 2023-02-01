@@ -1,0 +1,40 @@
+name: .NET
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore app\app.csproj
+    - name: Build
+      run: dotnet build app\app.csproj --no-restore
+    - name: QA Test
+      run: dotnet test app\ --no-build --verbosity normal
+    - name: Upload archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: verademoartifact
+        path: 'D:\a\verademo-dotnet\verademo-dotnet\app\bin\*'
+  VeracodeJob:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload & Scan
+      uses: veracode/veracode-uploadandscan-action@0.2.4
+      with:
+        appname: ${{ github.repository }}
+        createprofile: true
+        filepath: '*'
+        version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+        vid: ${{ secrets.VERA_ID }}
+        vkey: ${{ secrets.VERA_KEY }}
+        createsandbox: false 
+        scantimeout: 45
